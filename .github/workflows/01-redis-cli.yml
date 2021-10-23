@@ -1,4 +1,4 @@
-name: Redis container example
+name: 01-Redis container example
 on: workflow_dispatch
 
 jobs:
