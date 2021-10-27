@@ -1,26 +1,22 @@
-using System;
-using System.Threading;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using Samurai.Api.Infrastructure;
+
 using Samurai.Api.Services;
 
 namespace Samurai.Api
 {
     public class Startup
     {
-        public static string Conn;
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+        private IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -32,16 +28,6 @@ namespace Samurai.Api
             });
             services.AddTransient<ISamuraiService, SamuraiService>();
             services.AddTransient<ICacheManager, CacheManager>();
-            try
-            {
-                Conn = Configuration.GetConnectionString("Samurai");
-                services.AddDbContext<SamuraiContext>(options =>
-                    options.UseSqlServer(Conn));
-            }
-            catch
-            {
-                Program.ErrorDbContext = true;
-            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,9 +41,7 @@ namespace Samurai.Api
             }
 
             //app.UseHttpsRedirection();
-
             app.UseRouting();
-
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

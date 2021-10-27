@@ -1,7 +1,9 @@
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.Extensions.DependencyInjection;
-using Samurai.Api.Infrastructure;
+using Samurai.Api.Extensions;
 using Xunit;
 
 namespace Samurai.Api.IntegrationTests
@@ -13,8 +15,6 @@ namespace Samurai.Api.IntegrationTests
         public SamuraiApiShould(WebApplicationFactory<Startup> factory)
         {
             _factory = factory;
-            var context = _factory.Services.CreateScope().ServiceProvider.GetService<SamuraiContext>();
-            DbInitializer.Initialize(context);
         }
 
         [Fact]
@@ -27,7 +27,8 @@ namespace Samurai.Api.IntegrationTests
             var response = await client.GetAsync("/Samurais");
 
             // Assert
-            response.EnsureSuccessStatusCode();
+            var samurais = await response.GetToAsync<IEnumerable<Models.Samurai>>();
+            Assert.True(samurais.First().Name.Equals("Takeshi"));
         }
     }
 }

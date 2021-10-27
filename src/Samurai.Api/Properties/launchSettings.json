@@ -31,9 +31,6 @@
       "commandName": "Docker",
       "launchBrowser": true,
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/swagger",
-      "environmentVariables": {
-        "CONNECTIONSTRINGS__SAMURAI": "Server=.;Database=Samurai;User Id=sa;Password=MyStrongPwd1#;MultipleActiveResultSets=true"
-      },
       "publishAllPorts": true,
       "useSSL": true
     }

@@ -1,8 +1,8 @@
-name: 01-Redis container example
+name: 02-Redis container example
 on: workflow_dispatch
 
 jobs:
-  container-job:
+  runner-job:
     runs-on: ubuntu-latest
     services:
       redis:
