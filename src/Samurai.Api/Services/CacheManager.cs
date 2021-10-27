@@ -7,7 +7,7 @@ namespace Samurai.Api.Services
 {
     public class CacheManager: ICacheManager
     {
-        const string SecretName = "ConnectionStrings:Cache";
+        const string SecretName = "CacheConnection";
         private static string _connectionString;
 
 
